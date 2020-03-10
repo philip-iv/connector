@@ -1,9 +1,14 @@
+package io.connector;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-class ConnecterIO{
-    
+class Gui{
+	
+	public Gui() {
+		int i = 0;
+	}
+	
     //Creates a button and adds it to the container
     private void addButton(String text, Container container){
         JButton button = new JButton(text);
