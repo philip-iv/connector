@@ -5,6 +5,15 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
+		playGuiBased();
+	}
+	
+	private static void playGuiBased() {
+		new MainMenu();
+	}
+	
+	@SuppressWarnings("unused")
+	private static void playTextBased() {
 		Scanner in = new Scanner(System.in);
 		System.out.print("Enter Player 1's name: ");
 		String p1 = in.nextLine();
@@ -12,10 +21,10 @@ public class Main {
 		String p2 = in.nextLine();
 		Player player1 = new Player(p1);
 		Player player2 = new Player(p2);
-		Game game = new Game(player1, player2);
+		GameModel game = new GameModel(player1, player2);
 		
 		while (!game.isOver()) {
-			game.printBoard();
+			System.out.println(game);
 			System.out.println("Which col would " + game.getCurrentPlayer() + " like to place a piece in?");
 			int col;
 			try {
@@ -35,7 +44,7 @@ public class Main {
 				continue;
 			}
 		}
-		game.printBoard();
+		System.out.println(game);
 		System.out.println(game.getWinner() + " wins!");
 		
 		in.close();

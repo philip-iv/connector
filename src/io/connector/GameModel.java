@@ -1,27 +1,48 @@
 package io.connector;
 
-public class Board {
-	private Piece[][] board;
-	
-	public Board() {
-		board = new Piece[7][6]; // col, row, indexed from top left
-	}
-	
-	public boolean addPiece(int col, Player owner) {
-		/**
-		 * Attempts to add a new piece owned by owner in the specified column. Columns fill bottom-up.
-		 * If the column is full, the method returns false. Otherwise, it returns true.
-		 */
-		for (int i = board[col].length - 1; i >= 0; i--) {
+public class GameModel {
+
+	private Piece[][] board = new Piece[7][6];
+    private Player[] players = new Player[2];
+    private int turn;
+    
+
+    public GameModel(Player player1, Player player2)
+    {
+        players[0] = player1;
+        players[1] = player2;
+        turn = 0;
+    }
+    
+    public GameModel(String player1, String player2) {
+    	this(new Player(player1), new Player(player2));
+    }
+    
+    public Player getCurrentPlayer() {
+    	return players[turn % 2];
+    }
+    
+    public boolean placePiece(int col)
+    {
+    	for (int i = board[col].length - 1; i >= 0; i--) {
 			if (board[col][i] == null) {
-				board[col][i] = new Piece(owner);
+				board[col][i] = new Piece(players[turn % 2]);
+				turn++;
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public Player getWinner() {
+    }
+    
+    public boolean isOver() {
+    	return getWinner() != null;
+    }
+    
+    public Piece getPiece(int col, int row) {
+    	return board[col][row];
+    }
+    
+    public Player getWinner() {
 		for (int col = 0; col < board.length; col++) {
 			for (int row = 0; row < board[col].length; row++) {
 				boolean vertPossible = row <= board[col].length - 4;
@@ -85,8 +106,8 @@ public class Board {
 		}
 		return null;
 	}
-	
-	public String toString() {
+    
+    public String toString() {
 		String repr = "";
 		for (int row = 0; row < board[0].length; row++) {
 			for (int col = 0; col < board.length; col++) {
