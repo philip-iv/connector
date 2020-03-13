@@ -24,6 +24,11 @@ public class GameModel {
     
     public boolean placePiece(int col)
     {
+    	/**
+    	 * Attempt to add a {@link Piece} to the specified column by filling it bottom-up.
+    	 * If the column is full, returns false; otherwise, places the piece and
+    	 * returns true.
+    	 */
     	for (int i = board[col].length - 1; i >= 0; i--) {
 			if (board[col][i] == null) {
 				board[col][i] = new Piece(players[turn % 2]);
@@ -35,19 +40,33 @@ public class GameModel {
     }
     
     public void reset() {
+    	/**
+    	 * Empties the game board and sets the turn counter to 0. Doesn't
+    	 * affect player names.
+    	 */
     	board = new Piece[7][6];
     	turn = 0;
     }
 
     public boolean isOver() {
+    	/**
+    	 * Returns true if the game has a winner, false otherwise.
+    	 */
     	return getWinner() != null;
     }
     
     public Piece getPiece(int col, int row) {
+    	/**
+    	 * Returns the {@link Piece} at the specified location.
+    	 */
     	return board[col][row];
     }
     
     public Player getWinner() {
+    	/**
+    	 * Returns the {@link Player} who has won the game, or null if the game
+    	 * has no winner yet.
+    	 */
 		for (int col = 0; col < board.length; col++) {
 			for (int row = 0; row < board[col].length; row++) {
 				boolean vertPossible = row <= board[col].length - 4;

@@ -57,6 +57,10 @@ public abstract class GameController {
 	}
 	
 	private void syncModelView() {
+		/**
+		 * Updates the {@link GameView view} to reflect the state of the
+		 * {@link GameModel model}.
+		 */
 		for (int row = 0; row < 6; row++) {
 			for (int col = 0; col < 7; col++) {
 				JButton btn = view.getButton(col, row);

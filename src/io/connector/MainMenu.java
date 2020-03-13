@@ -71,6 +71,9 @@ public class MainMenu {
 	}
 
 	private String promptName(String player) {
+		/**
+		 * Shows a {@link JOptionPane} to prompt for a player's name.
+		 */
 		return JOptionPane.showInputDialog(frame, "Enter name for " + player);
 	}
 }
