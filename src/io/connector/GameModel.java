@@ -34,6 +34,11 @@ public class GameModel {
 		return false;
     }
     
+    public void reset() {
+    	board = new Piece[7][6];
+    	turn = 0;
+    }
+
     public boolean isOver() {
     	return getWinner() != null;
     }

@@ -3,6 +3,7 @@ package io.connector;
 import java.util.function.Consumer;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public abstract class GameController {
 	protected GameView view;
@@ -31,7 +32,26 @@ public abstract class GameController {
 		if(placePiece(col)) {
 			syncModelView();
 			if (model.isOver()) {
-				onEnd.accept(model.getWinner());
+				Object[] options = { "Rematch", "Main Menu"};
+				int opt = JOptionPane.showOptionDialog(view.getPanel(),
+						model.getWinner() + " wins!",
+						"Game Over",
+						JOptionPane.CANCEL_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						null,
+						options,
+						options[1]);
+				switch (opt) {
+				case 0:
+					// Rematch
+					model.reset();
+					syncModelView();
+					break;
+				case 1:
+					// Main Menu
+					onEnd.accept(model.getWinner());
+					break;
+				}
 			}
 		}
 	}
@@ -43,6 +63,8 @@ public abstract class GameController {
 				Piece p = model.getPiece(col, row);
 				if (p != null)
 					btn.setText(p.toString());
+				else
+					btn.setText(" ");
 			}
 		}
 		view.setActivePlayer(model.getCurrentPlayer());
