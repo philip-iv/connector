@@ -45,7 +45,8 @@ public class MainMenu {
 	}
 	
 	private void startSinglePlayerGame() {
-		GameModel model = new GameModel("1", "AI");
+		String player1 = promptName("Player 1");
+		GameModel model = new GameModel(player1, "AI");
 		GameView view = new GameView();
 		GameController controller = new SinglePlayerGameController(view, model);
 		controller.onEnd(winner -> displayPanel(panel));
@@ -53,7 +54,9 @@ public class MainMenu {
 	}
 	
 	private void startTwoPlayerGame() {
-		GameModel model = new GameModel("1", "2");
+		String player1 = promptName("Player 1");
+		String player2 = promptName("Player 2");
+		GameModel model = new GameModel(player1, player2);
 		GameView view = new GameView();
 		GameController controller = new TwoPlayerGameController(view, model);
 		controller.onEnd(winner -> displayPanel(panel));
@@ -65,5 +68,9 @@ public class MainMenu {
 		pane.removeAll();
 		pane.add(panel);
 		pane.validate();
+	}
+
+	private String promptName(String player) {
+		return JOptionPane.showInputDialog(frame, "Enter name for " + player);
 	}
 }
