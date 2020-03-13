@@ -67,7 +67,8 @@ public class MainMenu {
 		Container pane = frame.getContentPane();
 		pane.removeAll();
 		pane.add(panel);
-		pane.validate();
+		pane.revalidate();
+		pane.repaint();
 	}
 
 	private String promptName(String player) {
