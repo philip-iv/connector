@@ -24,7 +24,8 @@ public class MainMenu {
 		panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		panel.setLayout(new GridLayout(4, 1));
 		JLabel name = new JLabel(title);
-		panel.add(name, BorderLayout.CENTER);
+		name.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(name);
 		
 		JButton singlePlayerButton = new JButton("Player vs AI");
 		singlePlayerButton.addActionListener(e -> startSinglePlayerGame());
