@@ -13,6 +13,7 @@ public abstract class GameController {
 		this.view = view;
 		this.model = model;
 		bindButtons(view.getButtons());
+		view.setActivePlayer(model.getCurrentPlayer());
 	}
 	
 
@@ -44,6 +45,7 @@ public abstract class GameController {
 					btn.setText(p.toString());
 			}
 		}
+		view.setActivePlayer(model.getCurrentPlayer());
 	}
 	
 	abstract protected boolean placePiece(int col);
