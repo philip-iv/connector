@@ -47,13 +47,12 @@ public abstract class GameController {
 						options,
 						options[1]);
 				switch (opt) {
-				case 0:
-					// Rematch
+				case 0: // Rematch
 					model.reset();
 					syncModelView();
 					break;
-				case 1:
-					// Main Menu
+				case -1: // Exit the dialog without clicking a button
+				case 1: // Main Menu
 					onEnd.accept(model.getWinner());
 					break;
 				}
