@@ -1,7 +1,6 @@
 package io.connector;
 
-import javax.swing.BorderFactory;
-
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
@@ -9,6 +8,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.*;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 public class MainMenu {
 	private String title = "Connector.IO";
@@ -76,8 +78,11 @@ public class MainMenu {
 	}
 
 	private void startSinglePlayerGame() {
-		String player1 = promptName("Player 1");
-		GameModel model = new GameModel(player1, "AI");
+		Player player1 = promptPlayer("Player 1", Color.RED);
+		if (player1 == null)
+			return;
+		Player ai = new Player("AI", (player1.getColor().equals(Color.RED) ? Color.YELLOW : Color.RED ));
+		GameModel model = new GameModel(player1, ai);
 		GameView view = new GameView();
 		GameController controller = new SinglePlayerGameController(view, model);
 		controller.onEnd(winner -> displayPanel(panel));
@@ -85,8 +90,26 @@ public class MainMenu {
 	}
 	
 	private void startTwoPlayerGame() {
-		String player1 = promptName("Player 1");
-		String player2 = promptName("Player 2");
+		Player player1 = promptPlayer("Player 1", Color.RED);
+		if (player1 == null)
+			return;
+		Player player2 = promptPlayer("Player 2", Color.YELLOW);
+		if (player2 == null)
+			return;
+		if (player1.getName().equals(player2.getName())) {
+			JOptionPane.showMessageDialog(frame,
+					"Both players cannot have the same name",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if (player1.getColor().equals(player2.getColor())) {
+			JOptionPane.showMessageDialog(frame,
+					"Both players cannot pick the same color",
+					"Error",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		GameModel model = new GameModel(player1, player2);
 		GameView view = new GameView();
 		GameController controller = new TwoPlayerGameController(view, model);
@@ -102,10 +125,39 @@ public class MainMenu {
 		pane.repaint();
 	}
 
-	private String promptName(String player) {
+	private Player promptPlayer(String player, Color defaultColor) {
 		/**
-		 * Shows a {@link JOptionPane} to prompt for a player's name.
+		 * Shows a {@link JOptionPane} to prompt for a player's name and preferred color.
 		 */
-		return JOptionPane.showInputDialog(frame, "Enter name for " + player);
+		JPanel input = new JPanel();
+		input.add(new JLabel("Name: "));
+		
+		JTextField name = new JTextField(12);
+		// Make the text box the focus when the dialog opens
+		name.addAncestorListener(new AncestorListener() {
+			public void ancestorAdded(AncestorEvent e) {
+				JComponent c = e.getComponent();
+				c.requestFocusInWindow();
+			}
+			public void ancestorRemoved(AncestorEvent e) {}
+			public void ancestorMoved(AncestorEvent event) {}
+		});
+		input.add(name);
+		
+		JLabel colorLabel = new JLabel("Token color: ");
+		input.add(colorLabel);
+		
+		JColorChooser colorPicker = new JColorChooser(defaultColor);
+		colorPicker.setPreviewPanel(new JPanel()); // Remove preview panel
+		// Only enable the HSV picker
+		AbstractColorChooserPanel[] allPanels = colorPicker.getChooserPanels();
+		AbstractColorChooserPanel[] desiredPanels = { allPanels[1] };
+		colorPicker.setChooserPanels(desiredPanels);
+		input.add(colorPicker);
+		
+		JOptionPane.showMessageDialog(frame, input, "Settings for " + player, JOptionPane.PLAIN_MESSAGE);
+		if (name.getText().equals("")) //TODO: handle X out vs empty name differently
+			return null;
+		return new Player(name.getText(), colorPicker.getColor());
 	}
 }

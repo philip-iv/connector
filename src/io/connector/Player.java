@@ -15,6 +15,10 @@ public class Player {
 		return color;
 	}
 	
+	public Object getName() {
+		return name;
+	}
+	
 	public String toString() {
 		return name;
 	}
