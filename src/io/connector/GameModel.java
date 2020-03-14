@@ -1,5 +1,7 @@
 package io.connector;
 
+import java.awt.Color;
+
 public class GameModel {
 
 	private Piece[][] board = new Piece[7][6];
@@ -15,7 +17,7 @@ public class GameModel {
     }
     
     public GameModel(String player1, String player2) {
-    	this(new Player(player1), new Player(player2));
+    	this(new Player(player1, Color.RED), new Player(player2, Color.YELLOW));
     }
     
     public Player getCurrentPlayer() {

@@ -1,5 +1,6 @@
 package io.connector;
 
+import java.awt.Color;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,8 +20,8 @@ public class Main {
 		String p1 = in.nextLine();
 		System.out.print("Enter Player 2's name: " );
 		String p2 = in.nextLine();
-		Player player1 = new Player(p1);
-		Player player2 = new Player(p2);
+		Player player1 = new Player(p1, Color.RED);
+		Player player2 = new Player(p2, Color.YELLOW);
 		GameModel game = new GameModel(player1, player2);
 		
 		while (!game.isOver()) {

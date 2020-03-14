@@ -67,12 +67,12 @@ public abstract class GameController {
 		 */
 		for (int row = 0; row < 6; row++) {
 			for (int col = 0; col < 7; col++) {
-				JButton btn = view.getButton(col, row);
+				PieceButton btn = view.getButton(col, row);
 				Piece p = model.getPiece(col, row);
 				if (p != null)
-					btn.setText(p.toString());
+					btn.setColor(p.getOwner().getColor());
 				else
-					btn.setText(" ");
+					btn.setColor(btn.getBackground());
 			}
 		}
 		view.setActivePlayer(model.getCurrentPlayer());

@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class GameView {
 	private JPanel mainPanel;
 	private JPanel boardPanel;
-	private JButton[][] gameCells;
+	private PieceButton[][] gameCells;
 	private JLabel activePlayer;
 	
 	public GameView() {
@@ -18,11 +18,11 @@ public class GameView {
 		mainPanel.setLayout(new BorderLayout());
 
 		boardPanel = new JPanel();
-		gameCells = new JButton[7][6]; // col, row
+		gameCells = new PieceButton[7][6]; // col, row
 		boardPanel.setLayout(new GridLayout(6, 7));
 		for (int row = 0; row < 6; row++) {
 			for (int col = 0; col < 7; col++) {
-				JButton btn = new JButton(" ");
+				PieceButton btn = new PieceButton();
 				gameCells[col][row] = btn;
 				boardPanel.add(btn);
 			}
@@ -37,11 +37,11 @@ public class GameView {
 		return mainPanel;
 	}
 	
-	public JButton[][] getButtons() {
+	public PieceButton[][] getButtons() {
 		return gameCells;
 	}
 	
-	public JButton getButton(int col, int row) {
+	public PieceButton getButton(int col, int row) {
 		return gameCells[col][row];
 	}
 
