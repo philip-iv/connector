@@ -13,7 +13,9 @@ public class SinglePlayerGameController extends GameController {
 		if (!model.placePiece(col))
 			return false;
 		
-		// TODO: Handle full board after P1's move
+		// If the game board is full, skip the AI's turn
+		if (model.isFull())
+			return true;
 		
 		// Place AI's piece
 		Random r = new Random();
