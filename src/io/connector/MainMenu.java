@@ -2,9 +2,9 @@ package io.connector;
 
 import javax.swing.BorderFactory;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -23,6 +23,24 @@ public class MainMenu {
 		panel = new JPanel();
 		panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
 		panel.setLayout(new GridLayout(4, 1));
+		
+		JMenuBar menuBar = new JMenuBar();
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.setMnemonic(KeyEvent.VK_F);
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.addActionListener(e -> System.exit(0));
+		exit.setMnemonic(KeyEvent.VK_E);
+		fileMenu.add(exit);
+		menuBar.add(fileMenu);
+		JMenu helpMenu = new JMenu("Help");
+		helpMenu.setMnemonic(KeyEvent.VK_H);
+		JMenuItem howTo = new JMenuItem("How to play");
+		howTo.setMnemonic(KeyEvent.VK_P);
+		// TODO: Make help button do something
+		helpMenu.add(howTo);
+		menuBar.add(helpMenu);
+		frame.setJMenuBar(menuBar);
+		
 		JLabel name = new JLabel(title);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(name);
