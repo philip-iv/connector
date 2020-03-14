@@ -32,9 +32,14 @@ public abstract class GameController {
 		if(placePiece(col)) {
 			syncModelView();
 			if (model.isOver()) {
+				String winnerText;
+				if (model.isWinner())
+					winnerText = model.getWinner() + " wins!";
+				else
+					winnerText = "The game is a draw, nobody wins.";
 				Object[] options = { "Rematch", "Main Menu"};
 				int opt = JOptionPane.showOptionDialog(view.getPanel(),
-						model.getWinner() + " wins!",
+						winnerText,
 						"Game Over",
 						JOptionPane.CANCEL_OPTION,
 						JOptionPane.QUESTION_MESSAGE,

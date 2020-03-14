@@ -47,12 +47,30 @@ public class GameModel {
     	board = new Piece[7][6];
     	turn = 0;
     }
+    
+    public boolean isFull() {
+    	/**
+    	 * Returns true if the board is full.
+    	 */
+    	for (int col = 0; col < board.length; col++) {
+    		for (int row = 0; row < board[col].length; row++) {
+    			if (board[col][row] == null)
+    				return false;
+    		}
+    	}
+    	return true;
+    }
+    
+    public boolean isWinner() {
+    	return getWinner() != null;
+    }
 
     public boolean isOver() {
     	/**
-    	 * Returns true if the game has a winner, false otherwise.
+    	 * Returns true if the game is over, either due to having a winner or the board
+    	 * being full.
     	 */
-    	return getWinner() != null;
+    	return isWinner() || isFull();
     }
     
     public Piece getPiece(int col, int row) {
