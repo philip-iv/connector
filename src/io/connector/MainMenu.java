@@ -12,6 +12,14 @@ import javax.swing.*;
 
 public class MainMenu {
 	private String title = "Connector.IO";
+	private String helpText = "Rules: \n" +
+			"1. Users take turns placing a piece into a column of the game board.\n" +
+			"2. If a player has 4 pieces in a row vertically, horizontally, or diagonally, they win and the game ends.\n" +
+			"3. If the board fills without any player getting 4 in a row, the game ends in a draw.\n\n" +
+			"Game Modes:\n" +
+			"Player vs AI: A single human plays against the computer\n" +
+			"Player vs Player: Two humans play against each other, taking turns to place pieces.\n" +
+			"A turn indicator at the top of the game board says who's turn it is. Player 1 always goes first.";
 	private JFrame frame;
 	private JPanel panel;
 	
@@ -36,7 +44,7 @@ public class MainMenu {
 		helpMenu.setMnemonic(KeyEvent.VK_H);
 		JMenuItem howTo = new JMenuItem("How to play");
 		howTo.setMnemonic(KeyEvent.VK_P);
-		// TODO: Make help button do something
+		howTo.addActionListener(e -> showHelpDialog());
 		helpMenu.add(howTo);
 		menuBar.add(helpMenu);
 		frame.setJMenuBar(menuBar);
@@ -63,6 +71,10 @@ public class MainMenu {
 		frame.setVisible(true);
 	}
 	
+	private void showHelpDialog() {
+		JOptionPane.showMessageDialog(frame, helpText, "How to play", JOptionPane.PLAIN_MESSAGE);
+	}
+
 	private void startSinglePlayerGame() {
 		String player1 = promptName("Player 1");
 		GameModel model = new GameModel(player1, "AI");
