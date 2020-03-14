@@ -13,8 +13,8 @@ public class SinglePlayerGameController extends GameController {
 		if (!model.placePiece(col))
 			return false;
 		
-		// If the game board is full, skip the AI's turn
-		if (model.isFull())
+		// If the game is over, skip the AI's turn
+		if (model.isOver())
 			return true;
 		
 		// Place AI's piece
