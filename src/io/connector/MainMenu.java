@@ -13,8 +13,8 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 public class MainMenu {
-	private String title = "Connector.IO";
-	private String helpText = "Rules: \n" +
+	private static final String TITLE = "Connector.IO";
+	private static final String HELP_TEXT = "Rules: \n" +
 			"1. Users take turns placing a piece into a column of the game board.\n" +
 			"2. If a player has 4 pieces in a row vertically, horizontally, or diagonally, they win and the game ends.\n" +
 			"3. If the board fills without any player getting 4 in a row, the game ends in a draw.\n\n" +
@@ -22,11 +22,13 @@ public class MainMenu {
 			"Player vs AI: A single human plays against the computer\n" +
 			"Player vs Player: Two humans play against each other, taking turns to place pieces.\n" +
 			"A turn indicator at the top of the game board says who's turn it is. Player 1 always goes first.";
+	private static final String ABOUT_TEXT = "Connector.io\nMade by Philip Stephenson & Edward Valencia";
+
 	private JFrame frame;
 	private JPanel panel;
 	
 	public MainMenu() {
-		frame = new JFrame(title);
+		frame = new JFrame(TITLE);
         frame.addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent e) {System.exit(0);}
         });
@@ -48,10 +50,14 @@ public class MainMenu {
 		howTo.setMnemonic(KeyEvent.VK_P);
 		howTo.addActionListener(e -> showHelpDialog());
 		helpMenu.add(howTo);
+		JMenuItem about = new JMenuItem("About");
+		about.setMnemonic(KeyEvent.VK_A);
+		about.addActionListener(e -> showAboutDialog());
+		helpMenu.add(about);
 		menuBar.add(helpMenu);
 		frame.setJMenuBar(menuBar);
 		
-		JLabel name = new JLabel(title);
+		JLabel name = new JLabel(TITLE);
 		name.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(name);
 		
@@ -74,7 +80,11 @@ public class MainMenu {
 	}
 	
 	private void showHelpDialog() {
-		JOptionPane.showMessageDialog(frame, helpText, "How to play", JOptionPane.PLAIN_MESSAGE);
+		JOptionPane.showMessageDialog(frame, HELP_TEXT, "How to play", JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	private void showAboutDialog() {
+		JOptionPane.showMessageDialog(frame, ABOUT_TEXT, "About", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	private void startSinglePlayerGame() {
